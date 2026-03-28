@@ -1,0 +1,83 @@
+{
+  "formatVersion": 1,
+  "passTypeIdentifier": "pass.com.example.pulsation",
+  "teamIdentifier": "XXXXXXXXXX",
+  "serialNumber": "PULSATION-2026-002",
+  "organizationName": "Comitas s.r.o.",
+  "description": "Pulsation Indoor Festival 2026",
+  "foregroundColor": "rgb(255, 255, 255)",
+  "backgroundColor": "rgb(30, 30, 30)",
+  "labelColor": "rgb(180, 180, 180)",
+  "eventTicket": {
+    "headerFields": [
+      {
+        "key": "date",
+        "label": "DATUM",
+        "value": "28. 3. 2026"
+      }
+    ],
+    "primaryFields": [
+      {
+        "key": "event",
+        "label": "UDALOST",
+        "value": "Pulsation Indoor Festival 2026"
+      }
+    ],
+    "secondaryFields": [
+      {
+        "key": "venue",
+        "label": "MIESTO",
+        "value": "A4 Studio"
+      },
+      {
+        "key": "ticket-type",
+        "label": "TYP",
+        "value": "One-day Ticket / SOBOTA"
+      }
+    ],
+    "auxiliaryFields": [
+      {
+        "key": "price",
+        "label": "CENA",
+        "value": "35 €"
+      },
+      {
+        "key": "category",
+        "label": "KATEGORIA",
+        "value": "LAST CHANCE"
+      }
+    ],
+    "backFields": [
+      {
+        "key": "address",
+        "label": "ADRESA",
+        "value": "Trnavska cesta 39, 831 04 Bratislava"
+      },
+      {
+        "key": "organizer",
+        "label": "ORGANIZATOR",
+        "value": "Comitas s.r.o.\nLermontovova 911/3, 811 05 Bratislava\nICO: 52953963, DIC: 2121269557"
+      },
+      {
+        "key": "support",
+        "label": "ZAKAZNICKA PODPORA",
+        "value": "www.goout.net/sk/casto-kladene-otazky\n+421 232 18 00 18\ninfo@goout.sk"
+      }
+    ]
+  },
+  "barcodes": [
+    {
+      "format": "PKBarcodeFormatQR",
+      "message": "3937555449688",
+      "messageEncoding": "iso-8859-1"
+    }
+  ],
+  "relevantDate": "2026-03-28T18:00+02:00",
+  "locations": [
+    {
+      "latitude": 48.1565,
+      "longitude": 17.1372,
+      "relevantText": "Pulsation Indoor Festival - A4 Studio"
+    }
+  ]
+}
