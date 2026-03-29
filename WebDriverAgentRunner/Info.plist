@@ -21,10 +21,42 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string></string>
+	<string>WebDriverAgent requires location access for automation</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
+	<string>WebDriverAgent requires location access for automation</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>WebDriverAgent requires location access for automation</string>
+	<key>NSContactsUsageDescription</key>
+	<string>WebDriverAgent requires contacts access for automation</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>WebDriverAgent requires calendar access for automation</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>WebDriverAgent requires full calendar access for automation</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>WebDriverAgent requires reminders access for automation</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>WebDriverAgent requires full reminders access for automation</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>WebDriverAgent requires photo library access for automation</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>WebDriverAgent requires photo library write access for automation</string>
+	<key>NSCameraUsageDescription</key>
+	<string>WebDriverAgent requires camera access for automation</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>WebDriverAgent requires microphone access for automation</string>
+	<key>NSMotionUsageDescription</key>
+	<string>WebDriverAgent requires motion sensor access for automation</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>WebDriverAgent requires Bluetooth access for automation</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>WebDriverAgent requires Bluetooth access for automation</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>WebDriverAgent requires local network access for automation</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>WebDriverAgent requires Face ID access for automation</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>WebDriverAgent requires speech recognition access for automation</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>WebDriverAgent requires tracking access for automation</string>
 </dict>
 </plist>
