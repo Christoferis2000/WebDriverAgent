@@ -1,0 +1,16 @@
+{
+  "name": "wda-windows-client-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimalny Appium/WebDriverIO klient na vyskusanie WebDriverAgent z Windows PC",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "webdriverio": "^9.0.0"
+  }
+}
