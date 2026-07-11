@@ -1,0 +1,41 @@
+{
+  "projects": [
+    {
+      "name": "Mac – reálne zariadenie (USB-only)",
+      "description": "iPhone/iPad pripojený USB k Macu, WDA cez Appium. Bezpečné: WDA viazané na loopback (USB), nie WiFi.",
+      "APPIUM_URL": "http://127.0.0.1:4723",
+      "DEVICE_NAME": "iPhone",
+      "PLATFORM_VERSION": "17.0",
+      "BUNDLE_ID": "com.apple.Preferences",
+      "WDA_BINDING_IP": "127.0.0.1"
+    },
+    {
+      "name": "Mac – simulátor",
+      "description": "iOS simulátor bežiaci na Macu (Appium na 127.0.0.1:4723).",
+      "APPIUM_URL": "http://127.0.0.1:4723",
+      "DEVICE_NAME": "iPhone 15",
+      "PLATFORM_VERSION": "17.0",
+      "BUNDLE_ID": "com.apple.Preferences",
+      "WDA_BINDING_IP": "127.0.0.1"
+    },
+    {
+      "name": "Mac v sieti (z Windows PC)",
+      "description": "Appium beží na Macu, klient na Windowse. Uprav IP Macu. Pozor: port 4723 na LAN – chráň firewallom.",
+      "APPIUM_URL": "http://192.168.1.50:4723",
+      "DEVICE_NAME": "iPhone",
+      "PLATFORM_VERSION": "17.0",
+      "BUNDLE_ID": "com.apple.Preferences",
+      "WDA_BINDING_IP": "127.0.0.1"
+    },
+    {
+      "name": "Cloud – BrowserStack",
+      "description": "Cloudová device farma hostuje WDA aj zariadenie. Doplň CLOUD_USER/CLOUD_KEY (alebo cez env).",
+      "APPIUM_URL": "https://hub-cloud.browserstack.com/wd/hub",
+      "DEVICE_NAME": "iPhone 15",
+      "PLATFORM_VERSION": "17.0",
+      "BUNDLE_ID": "com.apple.Preferences",
+      "CLOUD_USER": "",
+      "CLOUD_KEY": ""
+    }
+  ]
+}

@@ -27,8 +27,12 @@ zmena jednej premennej, o ktorej hovorí [`../../WINDOWS_SETUP.md`](../../WINDOW
 
 ## Bezpečnosť
 
-- V klientovi nechaj `WDA_BINDING_IP=127.0.0.1` → WDA na zariadení je dostupné **iba
-  cez USB**, nie cez WiFi (WDA nemá autentifikáciu ani TLS).
+- Reálne zariadenie sa oslovuje **cez USB** (klient ide na `127.0.0.1`) — to je
+  primárna izolácia, WiFi IP zariadenia sa nepoužíva.
+- `WDA_BINDING_IP=127.0.0.1` v klientovi je **doplnkový zámok** proti WiFi expozícii
+  WDA (port 8100). WDA nemá autentifikáciu ani TLS. Pozn.: XCUITest docs ho značia ako
+  simulátorový — over si, že `http://<WiFi-IP-zariadenia>:8100/status` z iného stroja
+  neodpovedá; ak áno, doplň firewall.
 - Port `4723` (Appium) bude na LAN — chráň ho firewallom a dôveryhodnou sieťou.
 - **Najbezpečnejšie:** spusti klienta priamo na Macu
   (`APPIUM_URL=http://127.0.0.1:4723`) — vtedy nič neopúšťa Mac ani USB.

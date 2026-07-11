@@ -137,27 +137,35 @@ Toto je dôležité a overené priamo v zdrojáku WDA.
   štandardne pripája na `http://127.0.0.1:<port>`, ktorý je cez USB kábel tunelovaný
   do zariadenia.
 
-**Na čo si dať pozor (predvolené správanie):**
+**Na čo si dať pozor (predvolené správanie — overené v zdrojáku):**
 - ⚠️ WDA HTTP server na zariadení sa **predvolene viaže na všetky rozhrania (0.0.0.0)**,
-  takže je **dostupný aj cez WiFi/LAN**.
-- ⚠️ WDA **nemá žiadnu autentifikáciu ani TLS** (a CORS je `*`). Kto dosiahne port,
+  vrátane WiFi IP na porte `8100` — teda je **dostupný aj cez WiFi/LAN**
+  (`WebDriverAgentLib/Routing/FBWebServer.m`).
+- ⚠️ WDA **nemá žiadnu autentifikáciu ani TLS** (CORS je `*`). Kto dosiahne port,
   má **plnú kontrolu nad zariadením**.
-- ⚠️ MJPEG stream (screenshoty) sa tiež viaže na všetky rozhrania.
+- ⚠️ MJPEG stream (screenshoty, default port `9100`) sa tiež viaže na všetky rozhrania.
 
 **Ako to zamknúť na „iba natívne / USB-only":**
-1. V klientovi nechaj **`WDA_BINDING_IP=127.0.0.1`** (default v tomto príklade) →
-   nastaví capability `appium:wdaBindingIP` → WDA sa na zariadení viaže len na
-   loopback → dostupný **výhradne cez USB**, nie cez WiFi.
-2. Klient nech cieli na `127.0.0.1` (USB forward), nie na WiFi IP zariadenia.
-3. MJPEG stream nezapínaj, ak ho nepotrebuješ.
+1. **Primárna izolácia (platí vždy):** reálne zariadenie sa oslovuje **cez USB
+   (usbmux)** — klient ide na `127.0.0.1:<wdaLocalPort>` na Macu, ktorý je tunelovaný
+   do zariadenia. Klient teda **nikdy nepoužíva WiFi IP zariadenia**.
+2. **Doplnkový zámok proti WiFi expozícii:** v klientovi nechaj
+   **`WDA_BINDING_IP=127.0.0.1`** → capability `appium:wdaBindingIP` → WDA sa na
+   zariadení viaže len na loopback.
+   - ℹ️ V kóde WDA to funguje aj na reálnom zariadení (`USE_IP` → `setInterface:`),
+     **ale oficiálne XCUITest docs ho značia ako „only relevant for simulators"** →
+     efekt môže závisieť od verzie `appium-xcuitest-driver`. **Over si to:** z iného
+     počítača v sieti nesmie odpovedať `http://<WiFi-IP-zariadenia>:8100/status`.
+     Ak odpovedá, doplň **firewall** / dôveryhodnú sieť.
+3. MJPEG stream nezapínaj, ak ho nepotrebuješ (nemá vlastné obmedzenie IP).
 4. **Windows → Mac:** ak klient beží na Windowse a Appium na Macu, port `4723` je
    na LAN — chráň ho firewallom a používaj dôveryhodnú sieť. **Najbezpečnejšie:**
    spusti testovací klient **priamo na Macu** (localhost), Windows používaj len na
    editovanie kódu / cez remote desktop — vtedy nič neopúšťa Mac ani USB.
 
 > Zhrnutie: „iba natívne v mobile" = automatizácia beží natívne na zariadení (to platí
-> vždy) **+** WDA endpoint drž na loopback/USB (`wdaBindingIP=127.0.0.1`) a Appium port
-> nevystavuj zbytočne do siete.
+> vždy) **+** reálne zariadenie sa oslovuje cez USB **+** `wdaBindingIP=127.0.0.1` ako
+> doplnkový zámok proti WiFi (over ho) a Appium port nevystavuj zbytočne do siete.
 
 ## 6. Referencie v tomto repe (kde sa čo deje)
 
