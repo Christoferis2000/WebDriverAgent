@@ -35,6 +35,13 @@ const {
   // Co spustit. Ak nezadas appku, pouzije sa vstavana appka Settings (Nastavenia),
   // co je najspolahlivejsi sposob, ako overit, ze automatizacia funguje.
   BUNDLE_ID = 'com.apple.Preferences',
+
+  // BEZPECNOST (platí pre REALNE zariadenie, Cesta B): na ktore rozhranie sa ma
+  // WDA server na zariadeni bindnut. Default 127.0.0.1 = WDA je dostupny IBA cez
+  // USB tunel (usbmux), NIE cez WiFi/LAN. WDA nema ziadnu autentifikaciu ani TLS,
+  // takze loopback binding je kľucove zabezpecenie. Prazdna hodnota = bind na vsetky
+  // rozhrania (0.0.0.0) = vystavene do siete - NEODPORUCA sa.
+  WDA_BINDING_IP = '127.0.0.1',
 } = process.env;
 
 // --- Zostavenie W3C capabilities pre XCUITest driver -------------------------
@@ -48,6 +55,12 @@ const capabilities = {
   // Nechaj Appium/farmu spravovat WDA za nas:
   'appium:autoLaunch': true,
 };
+
+// BEZPECNOST: drz WDA na zariadeni viazane len na loopback (USB-only). Nastavuj
+// len pri realnom zariadeni (Cesta B) - pre cloud farmu WDA spravuje farma.
+if (WDA_BINDING_IP && !(CLOUD_USER && CLOUD_KEY)) {
+  capabilities['appium:wdaBindingIP'] = WDA_BINDING_IP;
+}
 
 // Rozparsovanie APPIUM_URL na host/port/path/protocol, ktore ocakava WebdriverIO.
 const url = new URL(APPIUM_URL);
@@ -73,6 +86,9 @@ if (CLOUD_USER && CLOUD_KEY) {
 async function main() {
   console.log(`[i] Pripajam sa na WDA/Appium: ${APPIUM_URL}`);
   console.log(`[i] Zariadenie: ${DEVICE_NAME} (iOS ${PLATFORM_VERSION}), appka: ${BUNDLE_ID}`);
+  if (capabilities['appium:wdaBindingIP']) {
+    console.log(`[i] Bezpecnost: WDA viazane na ${capabilities['appium:wdaBindingIP']} (USB-only, nie WiFi)`);
+  }
 
   const driver = await remote(options);
   try {

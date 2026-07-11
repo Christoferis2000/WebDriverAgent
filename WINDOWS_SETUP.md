@@ -96,6 +96,10 @@ WDA postavíš tam a Windows sa naň pripojí.
      appium driver install xcuitest
      appium        # spustí server na porte 4723
      ```
+     💡 **Tip — jeden príkaz:** namiesto manuálnych krokov spusti pripravený skript
+     [`examples/mac-quickstart/bootstrap.sh`](examples/mac-quickstart/), ktorý overí
+     Node/Xcode, nainštaluje Appium + XCUITest driver, vypíše IP a `APPIUM_URL` a
+     spustí server.
    - **Manuálny build simulátorového bundle:**
      ```bash
      npm run bundle
@@ -121,7 +125,41 @@ WDA postavíš tam a Windows sa naň pripojí.
 
 ---
 
-## 5. Referencie v tomto repe (kde sa čo deje)
+## 5. Bezpečnosť — „iba natívne na zariadení, nie vystavené do siete"
+
+Toto je dôležité a overené priamo v zdrojáku WDA.
+
+**Čo je v poriadku (potvrdené):**
+- ✅ **Automatizácia beží naozaj natívne na zariadení.** WDA je XCTest bundle, ktorý
+  linkuje `XCTest.framework` a volá priamo Apple XCUITest API na samotnom zariadení.
+  Príkazy sa nevykonávajú „na diaľku" — bežia v procese na iPhone/iPade.
+- ✅ **Zamýšľaný prenos je USB** (usbmux cez knižnicu `appium-ios-device`). Klient sa
+  štandardne pripája na `http://127.0.0.1:<port>`, ktorý je cez USB kábel tunelovaný
+  do zariadenia.
+
+**Na čo si dať pozor (predvolené správanie):**
+- ⚠️ WDA HTTP server na zariadení sa **predvolene viaže na všetky rozhrania (0.0.0.0)**,
+  takže je **dostupný aj cez WiFi/LAN**.
+- ⚠️ WDA **nemá žiadnu autentifikáciu ani TLS** (a CORS je `*`). Kto dosiahne port,
+  má **plnú kontrolu nad zariadením**.
+- ⚠️ MJPEG stream (screenshoty) sa tiež viaže na všetky rozhrania.
+
+**Ako to zamknúť na „iba natívne / USB-only":**
+1. V klientovi nechaj **`WDA_BINDING_IP=127.0.0.1`** (default v tomto príklade) →
+   nastaví capability `appium:wdaBindingIP` → WDA sa na zariadení viaže len na
+   loopback → dostupný **výhradne cez USB**, nie cez WiFi.
+2. Klient nech cieli na `127.0.0.1` (USB forward), nie na WiFi IP zariadenia.
+3. MJPEG stream nezapínaj, ak ho nepotrebuješ.
+4. **Windows → Mac:** ak klient beží na Windowse a Appium na Macu, port `4723` je
+   na LAN — chráň ho firewallom a používaj dôveryhodnú sieť. **Najbezpečnejšie:**
+   spusti testovací klient **priamo na Macu** (localhost), Windows používaj len na
+   editovanie kódu / cez remote desktop — vtedy nič neopúšťa Mac ani USB.
+
+> Zhrnutie: „iba natívne v mobile" = automatizácia beží natívne na zariadení (to platí
+> vždy) **+** WDA endpoint drž na loopback/USB (`wdaBindingIP=127.0.0.1`) a Appium port
+> nevystavuj zbytočne do siete.
+
+## 6. Referencie v tomto repe (kde sa čo deje)
 
 - `README.md` — oficiálny getting-started (Node + otvoriť `.xcodeproj`, `npm run bundle`).
 - `Scripts/build.sh`, `Scripts/build-webdriveragent.mjs` — ako sa WDA reálne stavia (Mac).
@@ -132,12 +170,13 @@ WDA postavíš tam a Windows sa naň pripojí.
 
 ---
 
-## 6. Časté problémy
+## 7. Časté problémy
 
 | Problém | Príčina / riešenie |
 |--------|--------------------|
 | „Chcem WDA zbuildovať na Windowse" | Nedá sa — vyžaduje macOS + Xcode. Použi Cestu A alebo B. |
 | Session sa nevytvorí (Cesta B) | Skontroluj IP Macu, port 4723, firewall, či beží `appium`. |
+| WDA je vidno na WiFi (bezpečnosť) | Nastav `WDA_BINDING_IP=127.0.0.1` (capability `appium:wdaBindingIP`) → USB-only. |
 | Reálne zariadenie hlási signing error | Nastav Team + Provisioning profile v Xcode (Signing & Capabilities). |
 | Nesúlad verzií Xcode / iOS | WDA CI používa Xcode 16.4; staršie verzie nemusia zbuildovať. |
 | Cloud session padá na autentifikácii | Over `username`/`access key` a správnu URL endpointu farmy. |
